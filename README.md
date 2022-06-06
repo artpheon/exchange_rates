@@ -14,7 +14,7 @@ How to run exchange_rates:
 2. Clone the repo: https://github.com/artpheon/exchange_rates.git
 3. Having Docker running, change the directory to the cloned repo and run the command:
   
-  <code>docker-compose -f docker-compose.yaml up</code>
+  <code>docker-compose -f docker-compose.yaml up --build</code>
 
 4. After all the containers have launched, and passed all healthchecks, you may open the Airflow dashboard on http://localhost:8080 - log in using airflow/airflow as creadentials.
 5. To extract the entries in json format you may use the query_db.sh script:
