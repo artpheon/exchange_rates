@@ -21,4 +21,4 @@ dbAdmin.auth(
 );
 
 db = new Mongo().getDB("exchange_rates");
-db.createCollection("rate", { capped: false });
+db.createCollection("rates", { capped: false });

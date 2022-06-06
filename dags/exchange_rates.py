@@ -17,8 +17,6 @@ dag_current = DAG(
     start_date=pendulum.today('UTC')
 )
 
-start = EmptyOperator(dag=dag_current, task_id='exchange_rates_etl__current_start')
-
 
 def _collect_data(**context):
     with requests.Session() as s:
@@ -47,10 +45,12 @@ def _insert_data(**context):
         collection.insert_one(data)
 
 
-def _clear_data(**context):
+def _clean_path(**context):
     run_id = context['run_id']
     os.remove(f'/tmp/{run_id}.json')
 
+
+start = EmptyOperator(dag=dag_current, task_id='exchange_rates_etl__current_start')
 
 collect_data = PythonOperator(
     dag=dag_current,
@@ -66,12 +66,12 @@ insert_data = PythonOperator(
     provide_context=True,
 )
 
-clear_data = PythonOperator(
+clean_path = PythonOperator(
     dag=dag_current,
-    task_id='clear_data',
-    python_callable=_clear_data,
+    task_id='clean_path',
+    python_callable=_clean_path,
     provide_context=True,
     trigger_rule='all_done'
 )
 
-start >> collect_data >> insert_data >> clear_data
+start >> collect_data >> insert_data >> clean_path
