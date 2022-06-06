@@ -12,7 +12,7 @@ from airflow.operators.empty import EmptyOperator
 
 dag_current = DAG(
     dag_id='exchange_rates_etl__current',
-    schedule_interval=datetime.timedelta(hours=1),
+    schedule_interval=datetime.timedelta(hours=3),
     catchup=False,
     start_date=pendulum.today('UTC')
 )
