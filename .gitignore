@@ -1,0 +1,8 @@
+.*.*
+env/
+tmp/
+__pycache__/
+logs/
+plugins/
+dump.json
+.env
